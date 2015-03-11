@@ -1,0 +1,173 @@
+
+<!DOCTYPE HTML>
+<html>
+<title>Press F11 and smoke until you're dyin' </title>
+<meta charset="UTF-8">
+	<style type="text/css">
+	audio {
+		display: none;
+	}
+	#img {
+		margin: 0;
+		background: url('http://thealexsocial.club/img/viceroy.png');
+		background-repeat: no-repeat;
+		background-position: center;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		z-index: 6;
+	}
+	html,
+	body {
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+		overflow: hidden
+	}
+	.cig{
+		position: absolute;
+		z-index: 10;
+	}
+	#sea{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-image: url("http://www.netanimations.net/water_waves_ocean_ripple_high_quality_animated_gif.gif");
+		background-repeat: no-repeat;
+		background-size: cover;
+		top: 0px;
+	    filter: alpha(opacity=30);
+	    -moz-opacity: 0.3;
+	    -khtml-opacity: 0.3;
+	    opacity: 0.3;
+	    z-index: 2;
+
+	}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript">
+			var Colors = function () {
+				this.rgb = {
+					r: 0,
+					g: 0,
+					b: 0
+				};
+				this.rgbCurrent = {
+					r: 39,
+					g: 174,
+					b: 96
+				};
+				this.el = $('body');
+			}
+			Colors.prototype.Update = function () {
+				colors.Check();
+				colors.Set();
+				addCigs();
+				moveCigs();
+				removeCigs();
+			}
+			Colors.prototype.GetRandom = function () {
+				var x = Math.floor(Math.random() * 255);
+				return x;
+			}
+			Colors.prototype.Set = function () {
+				$('body').css("background-color", "rgb(" + colors.rgbCurrent.r + "," + colors.rgbCurrent.g + "," + colors.rgbCurrent.b + ")");
+			}
+			Colors.prototype.Increment = function (x) {
+				if(x == 1) colors.rgbCurrent.r += 1;
+				if(x == 2) colors.rgbCurrent.g += 1;
+				if(x == 3) colors.rgbCurrent.b += 1;
+			}
+			Colors.prototype.Decrement = function (x) {
+				if(x == 1) colors.rgbCurrent.r -= 1;
+				if(x == 2) colors.rgbCurrent.g -= 1;
+				if(x == 3) colors.rgbCurrent.b -= 1;
+			}
+			Colors.prototype.Check = function () {
+				if(colors.rgb.r == colors.rgbCurrent.r) { colors.rgb.r = colors.GetRandom(); }
+			  		else if(colors.rgb.r < colors.rgbCurrent.r) { colors.Decrement(1); } 
+			  		else if(colors.rgb.r > colors.rgbCurrent.r) { colors.Increment(1); }
+				if(colors.rgb.g == colors.rgbCurrent.g) { colors.rgb.g = colors.GetRandom(); }
+					else if(colors.rgb.g < colors.rgbCurrent.g) { colors.Decrement(2); }
+					else if(colors.rgb.g > colors.rgbCurrent.g) { colors.Increment(2); }
+				if(colors.rgb.b == colors.rgbCurrent.b) { colors.rgb.b = colors.GetRandom(); }
+					else if(colors.rgb.b < colors.rgbCurrent.b) { colors.Decrement(3); }
+					else if(colors.rgb.b > colors.rgbCurrent.b) { colors.Increment(3); }
+
+
+			}
+
+			var colors = new Colors();
+
+			colors.rgb.r = colors.GetRandom();
+			colors.rgb.g = colors.GetRandom();
+			colors.rgb.b = colors.GetRandom();
+
+			setInterval(colors.Update, 30, false);
+
+			cig = [];
+
+			var Cig = function () {
+				this.pos = -200;
+				this.start = Math.floor(Math.random() * window.innerWidth) + 0
+				this.cig = Math.floor(Math.random() * 5) + 1
+				this.rotationSpeed = 4;
+				this.speed = 4;
+				this.front = Math.floor(Math.random() * 2) + 1 == 1
+				this.element = this.Create();
+			}
+			Cig.prototype.Create = function () {
+				var el = $('<img class="cig" src="http://thealexsocial.club/img/s'+this.cig + '.png" style="top: ' + this.pos + 'px; left: ' + this.start + 'px;">');
+				$('body').append(el);
+				return (el);
+			}
+			Cig.prototype.Move = function () {
+				var newPos = this.element.css("top");
+				var newPos = parseInt(newPos.replace("px", ""));
+				var newPos = newPos + this.speed;
+				this.element.css("top", newPos + "px");
+				this.rotationSpeed++;
+				this.element.css("transform","rotate(" + this.rotationSpeed + "deg)");
+				this.element.css("-webkit-transform", "rotate(" + this.rotationSpeed + "deg)");
+				if(!this.front){
+
+					this.element.css("z-index", "4");
+				}
+			}
+
+			function addCigs () {
+				var r = Math.floor(Math.random() * 20) + 0
+
+				if(r == 5){
+					cig.push(new Cig());
+				}
+			}
+
+			function moveCigs () {
+				for (var i = cig.length - 1; i >= 0; i--) {
+					cig[i].Move();
+				};
+			}
+
+			function removeCigs () {
+				for (var i = cig.length - 1; i >= 0; i--) {
+					if(parseInt(cig[i].element.css("top").replace("px", "")) > window.innerHeight + 200){
+						cig.splice(i, 1);
+						i++;
+					}
+				};
+			}
+
+
+	</script>
+	<body>
+	<div id="img">
+		<audio controls autoplay>
+  			<source src="https://www.dropbox.com/s/zaavzc5y40a5nus/viceroy.mp3?raw=1" type="audio/mpeg">
+  			Your browser does not support the audio element.
+		</audio>
+	</div>
+	<div id="sea">
+		&nsbp;
+	</div>
+</html>
